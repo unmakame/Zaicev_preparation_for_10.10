@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void computeLPS(char* p, int m, int* lps) {
+void LPS(char* p, int m, int* lps) {
     int len = 0, i = 1;
     lps[0] = 0;
     while (i < m) {
@@ -22,7 +22,7 @@ void computeLPS(char* p, int m, int* lps) {
 void KMP(char* t, char* p) {
     int n = strlen(t), m = strlen(p);
     int* lps = (int*)malloc(m * sizeof(int));
-    computeLPS(p, m, lps);
+    LPS(p, m, lps);
 
     int i = 0, j = 0;
     while (i < n) {
@@ -49,3 +49,10 @@ int main() {
     KMP(text, pattern);
     return 0;
 }
+
+
+
+
+
+
+
