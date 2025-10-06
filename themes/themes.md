@@ -183,7 +183,7 @@ typedef struct{
 } Quene;
 
 void init(Quene *q, const char *filename){
-    FILE *file = fopen(filename, "w+b");
+    FILE *file = fopen(filename, "r+b");
     q->size = 0;
     q->file = file;
     q->head = 0;
@@ -213,7 +213,7 @@ int pop_front(Quene *q){
     if (is_empty(q)){
         return -1;
     }
-    int val;
+    int val
     fseek(q->file,q->head * sizeof(int), SEEK_SET);
     fread(&val, sizeof(int),1,q->buf);
     q->head = (q->head + 1) % q->max_size;
@@ -405,7 +405,50 @@ type HЕПУСТОЙСТЕК = ( верхушка: Т; тело: СТЕК-Т)
 если встречается операция, то из стека берется 2 верхних значения стека
 
 
-6) Линейный список (уметь написать на си)
+6) Линейный список (уметь написать на си)typedef struct node node;
+struct node{
+    node *next; //следующий элемент
+    node *prev; //предыдущий
+    int val;
+};
+
+typedef struct iter{
+    node *cur_node;
+}iter;
+
+Функции:
+bool equal(const iter *first, const iter *second){ // сравнение 2 итераторов
+	return first->cur_node==second->cur_node;
+}
+
+
+bool next(iter *i){ // передвигаем итератор вперед
+    if(i->cur_node->next==NULL){
+        return false;
+    }
+    i->cur_node=i->cur_node->next;
+    return true;
+}
+
+bool prev(iter *i){ //передвигаем итератор назад
+    if(i->cur_node->prev==NULL){
+        return false;
+    }
+    i->cur_node=i->cur_node->prev;
+    return true;
+}
+
+bool - чтобы предотвратить выход из последовательности
+
+int get_el( iter *i){ // получает элемент
+	return i->cur_nude->val;
+}
+
+void set_el( iter *i, int val){ // анастраивание элемент
+	i->cur_node->val=val;
+}
+
+
     - 6.1) Функциональная спецификация
     - 6.2) Логическое описание
     - 6.3) Физическое представление
