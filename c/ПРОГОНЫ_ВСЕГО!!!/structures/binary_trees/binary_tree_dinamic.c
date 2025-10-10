@@ -14,17 +14,6 @@ typedef struct {
     Node *root;
     int size;
 } Tree;
-
-void init(Tree *t) {
-    t->root = NULL;
-    t->size = 0;
-}
-
-bool is_empty(Tree *t) {
-    return t->root == NULL;
-}
-
-// Добавление ребенка к родителю
 bool add_child(Node *parent, int val) {
     Node *new_node = (Node*)malloc(sizeof(Node));
     new_node->data = val;
@@ -42,40 +31,28 @@ bool add_child(Node *parent, int val) {
     }
     return true;
 }
-
-// Вставка корня
 bool insert_root(Tree *t, int val) {
     if (!is_empty(t)) return false;
-    
     Node *new_node = (Node*)malloc(sizeof(Node));
     new_node->data = val;
     new_node->first_child = NULL;
     new_node->next_sibling = NULL;
-    
     t->root = new_node;
     t->size++;
     return true;
 }
-
-// Вставка ребенка к родителю по значению
 bool insert_child(Tree *t, int parent_val, int val) {
     if (is_empty(t)) return false;
-    
-    // Находим родителя (обход в глубину)
     Node *stack[100];
     int top = 0;
     stack[top++] = t->root;
-    
     while (top > 0) {
         Node *current = stack[--top];
-        
         if (current->data == parent_val) {
             add_child(current, val);
             t->size++;
             return true;
         }
-        
-        // Добавляем детей в стек
         Node *child = current->first_child;
         while (child != NULL) {
             stack[top++] = child;
